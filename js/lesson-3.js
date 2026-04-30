@@ -1,4 +1,18 @@
-// Дано масив об'єктів. Створіть новий масив, що містить всі значення 
+1
+ // Дано масив чисел [1, 2, 3, 4, 5]. Створіть новий масив, що містить
+// квадрати кожного елементу вхідного масиву.
+// Очікуваний результат: [1, 4, 9, 16, 25].
+
+const numberss = [1, 2, 3, 4, 5];
+function getNumbersSquare(numbers) {
+   return numberss.map(number => number ** 2);
+   
+}
+console.log(getNumbersSquare(numberss));
+
+
+2
+ // Дано масив об'єктів. Створіть новий масив, що містить всі значення
 // з масивів values кожного об'єкту, збережених в одному масиві. 
 // Очікуваний результат: [1, 2, 3, 4, 5, 6, 7, 8, 9].
 
@@ -191,5 +205,130 @@ const result = calc
 console.log(result); // 24
 
 
+// Завдання 12:
+ // Напиши клас Client який створює об'єкт з властивостями login email.
+ // Оголоси приватні властивості #login #email, доступ до яких зроби 
+ // через геттер та сеттер login email
+ 
+class Client {
+    #login;
+    #email;
+    constructor(param) {
+        this.#email = param.email;
+        this.#login = param.login;
+    }
+
+    get login() {
+        return this.#login;
+    }
+
+    set login(newLogin) {
+        if (newLogin.trim() === ``) {
+            console.log(`Login can't be empty!`);
+             return;
+        }
+        this.#login = newLogin;
+       
+          }
+    get email() {
+        return this.#email;
+    }
+    
+    set email(newEmail) {
+        if (!newEmail.includes(`@`)) {
+            console.log(`The email has to include (@)!`);
+            return;
+        }
+        this.#email = newEmail;
+        
+    }
+   
+  
+}
+ 
+const client = new Client({ login: `Aghrapur`, email: `aghrapur@gmail.com`});
+
+console.log(client.email);
+console.log(client.login);
 
 
+client.login = `Aghrapur1`;
+client.email = `aghrapur2@gmail.com`;
+
+
+console.log(client.email);
+console.log(client.login);
+
+
+  //  Наслідування у класах!
+  // Cтворіть клас `Person`, який містить наступні властивості:
+  //  - `name` - ім'я людини;
+  //  - `age`- вік людини;
+  //  - `gender` - стать людини;
+  //  - `email`- електронна пошта людини.
+  
+  // Крім того, клас `Person` має мати метод `getDetails()`,
+  // який повертає об'єкт з ім'ям, віком, статтю 
+  //та електронною поштою людини.
+  
+  // 
+  // Потім Створіть клас `Employee`, який розширює клас `Person` і містить наступні властивості:
+  //  - salary - зарплата співробітника;
+  //  - department - відділ, в якому працює співробітник.
+  // Крім того, клас `Employee` має мати метод `getEmployeeDetails()`, який повертає об'єкт з зарплатою співробітника та відділом, в якому він працює.
+
+class Person {
+    constructor(param) {
+        this.name = param.name;
+        this.age = param.age;
+        this.gender = param.gender;
+        this.email = param.email;
+        this.position = param.position;
+    }
+    getDetails() {
+        return {
+            name: this.name,
+            age: this.age,
+            gender: this.gender,
+            email: this.email,
+            position: this.position
+        }
+    }
+}
+  
+class Employee extends Person {
+    constructor(param) {
+        super(param);
+        this.department = param.department;
+        this.salary = param.salary;
+        
+    }
+    getEmployeeDetails() {
+        return {
+            department: this.department,
+            salary: this.salary
+        }
+    }
+    getFullInfo() {
+        return {...this.getDetails(),
+            ...this.getEmployeeDetails()}
+    }
+}
+const emp = new Employee({
+  name: "Aghrapur",
+  age: 30,
+  gender: "male",
+  email: "aghrapur@gmail.com",
+  salary: 2500,
+  department: "IT",
+  position: "Developer"
+});
+
+
+console.log(emp.name);       // "Aghrapur"
+console.log(emp.position);   // "Developer"
+console.log(emp.salary);     // 2500
+console.log(emp);
+console.log(emp.getDetails());
+console.log(emp.getEmployeeDetails());
+console.log(emp.getFullInfo());
