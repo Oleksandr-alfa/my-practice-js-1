@@ -129,3 +129,90 @@ if (randomNum % 2 === 0) {
 container.style.width = `600px`;
 container.style.margin = `0 auto`;
   
+3
+// Form Events, Input, Focus, Blur and Submit.
+
+// Використовуй шаблон форми з файлу html.
+
+// 1 - При події `input`, якщо користувач ввів в поле більше
+// 6 символів то додати клас `success`. Якщо ж символів менше аніж 6,
+// то клас `error`
+
+// 2 - При події `focus` зроби перевірку на пустоту поля інпута,
+// якщо ж поле пусте, то зроби `outline` => `'3px solid red'`,
+// якщо при фокусі поле непусте, то `outline` => `'3px solid green'`
+
+// 3 - При події `blur` зроби перевірку на пустоту поля інпута,
+// якщо ж поле пусте, то зроби `outline` => `'3px solid red'`,
+// якщо при фокусі поле непусте, то `outline` => `'3px solid lime'`
+
+// 4 - При події `submit`. Відміни поведінку браузера по змовчуванню.
+// Дістань данні з інпуту і чек боксу, зроби перевірку,
+// що інпут не порожній, також, що нажатий чек бокс у положення true,
+// якщо користувач все виконав вірно, збери данні (userName)
+// у обьект і виведи у консоль. У разі, якщо користувач не виконав
+// одну із умов, виведи повідомлення. Також при події інпут реалізуй додавання
+// ім`я користувача у span, замість слова "Anonymous".
+// Якщо користувач ввів ім`я, а потім видалив, зроби так,
+// щоб на місце повернулось дефолтне знаяення "Anonymous".
+// При відправці форми, очисти інпут, верни чек бокс у положення
+// false, верни дефолтне значення "Anonymous" у span.
+
+const form = document.querySelector(`.js-contact-form`);
+const input = form.elements[0];
+const btn = form.elements[form.elements.length - 1];
+const span = form.querySelector(`.js-username-output`);
+
+form.addEventListener(`input`, onFormInput);
+input.addEventListener(`focus`, onInputFocus);
+input.addEventListener(`blur`, onInputBlur);
+form.addEventListener(`submit`, onBtnSubmit);
+
+function onFormInput() {
+  const value = input.value.trim();
+  if (value.length > 6) {
+    input.classList.add(`success`);
+    input.classList.remove(`error`);
+    
+  } else{
+    input.classList.add(`error`);
+    input.classList.remove(`success`);
+  }
+ span.textContent = value !== '' ? value : 'Anonymous';
+}
+
+function onInputFocus() {
+  const value = input.value.trim();
+    input.style.outline = value !== '' ? '3px solid green' : '3px solid red';
+}
+
+function onInputBlur() {
+  const value = input.value.trim();
+  if (value === "") {
+    input.style.outline = `3px solid red`;
+  } else {
+    input.style.outline = `3px solid lime`;
+  }
+}
+
+function onBtnSubmit(event) {
+event.preventDefault();
+const value = input.value.trim();
+const checkbox = form.elements[1];
+
+if (value === "") {
+  console.log("Please enter a username.");
+} else if (!checkbox.checked) {
+  console.log("Please agree to the terms and conditions.");
+} else {
+  const userData = {
+    userName: value
+  };
+  console.log(userData);
+  }
+  form.reset();
+  span.textContent = "Anonymous";
+
+}
+
+
