@@ -216,3 +216,24 @@ if (value === "") {
 }
 
 
+4
+// Використовуй шаблон розмітки з файлу html та напиши наступний функціонал:
+ // При кліку на кнопку "Зменшити" квадрат стає меньшим на 20 пікселів, 
+ // При кліку на кнопку "Збільшити" - квадрат стає більшим на 20 пікселів.
+
+const box = document.querySelector(`.box`);
+const btnDcr = document.querySelector(`.js-decrease`);
+const btnIncr = document.querySelector(`.js-increase`);
+btnDcr.addEventListener(`click`, () => changeSize(-20));
+btnIncr.addEventListener(`click`, () => changeSize(20));
+
+function changeSize(delta) {
+  const current = parseInt(getComputedStyle(box).width);
+  const currentHeight = parseInt(getComputedStyle(box).height);
+  const newSize = current + delta;
+
+if (newSize >= 20) {
+  box.style.width = newSize + `px`;
+  box.style.height = newSize + `px`;
+  }
+}
